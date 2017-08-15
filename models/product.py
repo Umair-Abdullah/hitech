@@ -15,6 +15,7 @@ class ProductX(models.Model):
     max_qty = fields.Float('Max. Qty', digits=0, store=True)
     discount = fields.Float('Discount (%)', digits=0, store=True)
 
+    # Checking Discount
     @api.onchange('discount')
     def onchange_discount(self):
         if not (self.discount > -1 and self.discount <= 40):
