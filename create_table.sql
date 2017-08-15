@@ -1,20 +1,14 @@
-﻿CREATE TABLE public.ubw_gp_inward_print
+CREATE TABLE public.hr_attendance_temp
 (
   id integer NOT NULL,
-  gp_id integer,
   create_uid integer,
   create_date timestamp without time zone,
-  name character varying NOT NULL,
-  CONSTRAINT ubw_gp_inward_print_pkey PRIMARY KEY (id),
-  CONSTRAINT ubw_gp_inward_print_gp_id_fkey FOREIGN KEY (gp_id)
-      REFERENCES public.ubw_gp_inward (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE SET NULL,
-  CONSTRAINT ubw_gp_inward_print_create_uid_fkey FOREIGN KEY (create_uid)
-      REFERENCES public.res_users (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE SET NULL
-)
-WITH (
-  OIDS=FALSE
+  machine_id integer,
+  attendance_id integer,
+  employee_id integer,
+  time_in timestamp without time zone,
+  time_out timestamp without time zone,
+  flag_one character varying(2),
+  flag_two boolean,
+  CONSTRAINT hr_attendance_temp_pkey PRIMARY KEY (id)
 );
-ALTER TABLE public.ubw_gp_inward_print
-  OWNER TO odoo;
