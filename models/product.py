@@ -1,4 +1,7 @@
-from odoo import models, fields, api
+# -*- coding: utf-8 -*-
+
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError, AccessError, ValidationError
 
 class ProductX(models.Model):
     _inherit = 'product.product'
@@ -10,3 +13,14 @@ class ProductX(models.Model):
     misc_id = fields.Many2one('ubw.product.misc', 'Miscellaneous', required=False)
     min_qty = fields.Float('Min. Qty', digits=0, store=True)
     max_qty = fields.Float('Max. Qty', digits=0, store=True)
+    discount = fields.Float('Discount (%)', digits=0, store=True)
+
+    @api.onchange('discount')
+    def onchange_discount(self):
+        if not (self.discount > -1 and self.discount <= 40):
+            self.update(
+                {
+                    'discount': 0.0,
+                }
+            )
+            return

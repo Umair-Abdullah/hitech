@@ -1,11 +1,11 @@
-# from odoo import models, fields, api
-# from odoo.exceptions import ValidationError
+# -*- coding: utf-8 -*-
 
 from itertools import groupby
 from datetime import datetime, timedelta
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError, ValidationError
+
 from odoo.tools import float_is_zero, float_compare
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.tools.misc import formatLang

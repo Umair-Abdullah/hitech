@@ -47,6 +47,13 @@
                                 placeholder="Re-Order Level Max. Qty"
                         />
                     </group>
+                    <group>
+                        <field
+                                name="discount"
+                                string="Discount (%)"
+                                placeholder="0"
+                        />
+                    </group>
                     <!-- options='{"no_open": False, "no_create": True}' -->
                 </page>
             </page>

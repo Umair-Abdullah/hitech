@@ -5,5 +5,6 @@ from . import res_partner_area
 from . import res_partner
 from . import models
 from . import sale_order
+from . import sale_order_line
 from . import product
 from . import sales_team

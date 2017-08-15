@@ -15,6 +15,31 @@
             <xpath expr="//field[@name='user_id']" position="attributes">
                 <field name="user_id" on_change="onchange_user_id(user_id)"/>
             </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                <field name="islocked" invisible="1"/>
+            </xpath>
+            <!-- <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='discount']" position="attributes">
+                <field name="discount" on_change="onchange_discount(discount)"/>
+            </xpath> -->
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                <attribute name="attrs">{'readonly':[('islocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="attributes">
+                <attribute name="attrs">{'invisible':[('islocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
+                <attribute name="attrs">{'invisible':[('islocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="attrs">{'readonly':[('islocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                <!-- <field name="price_unit" attrs="{'readonly': [('islocked', '=', True)]}"/> -->
+                <attribute name="attrs">{'readonly':[('islocked', '=', True)]}</attribute>
+            </xpath>
     	</field>
     </record>
 
