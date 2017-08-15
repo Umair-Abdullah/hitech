@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="ubw_sale_order_view_form" model="ir.ui.view">
+    	<field name="name">ubw.sale.order.view.form</field>
+    	<field name="model">sale.order</field>
+    	<field name="inherit_id" ref="sale.view_order_form"/>
+    	<field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <field name="user_id" on_change="onchange_user_id(user_id)"/>
+            </xpath>
+    	</field>
+    </record>
+
+    <!-- Sales Orders Kanban View  -->
+    <record id="ubw_sale_order_view_kanban" model="ir.ui.view">
+        <field name="name">ubw.sale.order.view.kanban</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount_total"/>
+                <field name="date_order"/>
+                <field name="state"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong><span><t t-esc="record.partner_id.value"/></span></strong>
+                                </div>
+                                <div class="col-xs-6 pull-right text-right">
+                                    <strong><field name="amount_total" widget="monetary"/></strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 text-muted">
+                                    <span><t t-esc="record.name.value"/> <t t-esc="record.date_order.value"/></span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="pull-right text-right">
+                                        <field name="state" widget="kanban_label_selection" options="{'classes': {'draft': 'default', 'cancel': 'default',
+                                        'done': 'success'}}"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ubw_sale_order">
+        <field name="name">Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="sale.view_order_tree"/>
+        <!-- <field name="search_view_id" ref="res_partner_area_search"/> -->
+    </record>
+
+    <menuitem name="Orders" id="ubw_menu_partner_orders" parent="ubw_menu_sales" action="action_ubw_sale_order" sequence="25"/>
+
+</odoo>

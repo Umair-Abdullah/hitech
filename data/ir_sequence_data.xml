@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for ubw.gp.inward -->
+        <record id="ubw_gp_inward_seq" model="ir.sequence">
+            <field name="name">Inward GatePass</field>
+            <field name="code">ubw.gp.inward</field>
+            <field name="prefix">IN/%(year)s%(month)s%(day)s/</field>
+            <field name="padding">3</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!-- Sequences for ubw.gp.outward -->
+        <record id="ubw_gp_outward_seq" model="ir.sequence">
+            <field name="name">Outward GatePass</field>
+            <field name="code">ubw.gp.outward</field>
+            <field name="prefix">OUT/%(year)s%(month)s%(day)s/</field>
+            <field name="padding">3</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!-- Sequences for ubw.purchase.request -->
+        <record id="ubw_gp_purchase_request_seq" model="ir.sequence">
+            <field name="name">Internal Purchase Request</field>
+            <field name="code">ubw.purchase.request</field>
+            <field name="prefix">IPR/%(year)s%(month)s%(day)s/</field>
+            <field name="padding">3</field>
+            <field name="implementation">standard</field>
+        </record>
+
+    </data>
+</odoo>

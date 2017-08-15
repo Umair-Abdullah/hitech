@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubw_sales_report_pivot" model="ir.ui.view">
+         <field name="name">ubw.sales.report.pivot</field>
+         <field name="model">ubw.sales.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Sales Analysis" disable_linking="True">
+                 <field name="team_id" type="col"/>
+                 <field name="date" interval="month" type="row"/>
+                 <field name="quantity" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="ubw_sales_report_graph" model="ir.ui.view">
+         <field name="name">ubw.sales.report.graph</field>
+         <field name="model">ubw.sales.report</field>
+         <field name="arch" type="xml">
+             <graph string="Sales Analysis">
+                 <field name="date" type="row"/>
+                 <field name="quantity" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Custom reports (aka filters) -->
+    <record id="ubw_sales_report_sales_net_filter" model="ir.filters">
+        <field name="name">Sales</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="domain">['&amp;', ('date','&lt;=', time.strftime('%%Y-12-31')), '&amp;', ('date','&gt;=',time.strftime('%%Y-01-01')), ('state','not in',('cancel',))]</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['state'], 'measures': ['net_val']}</field>
+    </record>
+    <record id="ubw_sales_report_salespersons_filter" model="ir.filters">
+        <field name="name">By Salespersons</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'user_id']}</field>
+    </record>
+    <record id="ubw_sales_report_salesteam_filter" model="ir.filters">
+        <field name="name">By Salesteam</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'team_id']}</field>
+    </record>
+    <record id="ubw_sales_report_city_filter" model="ir.filters">
+        <field name="name">By City</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'city_id']}</field>
+    </record>
+    <record id="ubw_sales_report_area_filter" model="ir.filters">
+        <field name="name">By Area/Market</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'area_id']}</field>
+    </record>
+    <record id="ubw_sales_report_product_filter" model="ir.filters">
+        <field name="name">By Product</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'product_id']}</field>
+    </record>
+    <record id="ubw_sales_report_brand_filter" model="ir.filters">
+        <field name="name">By Brand</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'brand_id']}</field>
+    </record>
+    <record id="ubw_sales_report_size_filter" model="ir.filters">
+        <field name="name">By Size</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'size_id']}</field>
+    </record>
+    <record id="ubw_sales_report_type_filter" model="ir.filters">
+        <field name="name">By Type</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'type_id']}</field>
+    </record>
+    <record id="ubw_sales_report_spec_filter" model="ir.filters">
+        <field name="name">By Specification</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'spec_id']}</field>
+    </record>
+    <record id="ubw_sales_report_misc_filter" model="ir.filters">
+        <field name="name">By Miscellaneous</field>
+        <field name="model_id">ubw.sales.report</field>
+        <field name="user_id" eval="False"/>
+        <field name="context">{'group_by': ['date:month', 'misc_id']}</field>
+    </record>
+
+    <record id="ubw_sales_report_search" model="ir.ui.view">
+        <field name="name">ubw.sales.report.search</field>
+        <field name="model">ubw.sales.report</field>
+        <field name="arch" type="xml">
+            <search string="Sales Analysis X">
+                <field name="date"/>
+                <filter string="This Year" name="year" invisible="1" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <filter name="open" string="Open" domain="[('state', '=', 'open')]"/>
+                <filter name="paid" string="Done" domain="[('state', '=', 'paid')]"/>
+                <separator/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="city_id"/>
+                <field name="area_id"/>
+                <field name="brand_id"/>
+                <field name="size_id"/>
+                <field name="type_id"/>
+                <field name="spec_id"/>
+                <field name="misc_id"/>
+                <field name="user_id"/>
+                <group expand="0" string="Extended Filters">
+                    <field name="categ_id" filter_domain="[('categ_id', 'child_of', self)]"/>
+                </group>
+                <group expand="1" string="Group By">
+                    <filter string="Salesperson" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="Sales Team" context="{'group_by':'team_id'}"/>
+                    <filter string="Customer" name="Customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="City" name="Customer" context="{'group_by':'city_id'}"/>
+                    <filter string="Area/Market" name="Customer" context="{'group_by':'area_id'}"/>
+                    <filter string="Product Category" name="Category" context="{'group_by':'categ_id'}"/>
+                    <filter string="Product Brand" name="Brand" context="{'group_by':'brand_id'}"/>
+                    <filter string="Product Size" name="Size" context="{'group_by':'size_id'}"/>
+                    <filter string="Product Type" name="Type" context="{'group_by':'type_id'}"/>
+                    <filter string="Product Specification" name="Specification" context="{'group_by':'spec_id'}"/>
+                    <filter string="Product Miscellaneous" name="Mis" context="{'group_by':'misc_id'}"/>
+                    <filter name="status" string="Status" context="{'group_by':'state'}"/>
+                    <separator/>
+                    <filter string="Month" context="{'group_by':'date:month'}" help="Date of Invoice"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ubw_sales_report_all" model="ir.actions.act_window">
+        <field name="name">Sales Analysis</field>
+        <field name="res_model">ubw.sales.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="view_id"></field>  <!-- force empty -->
+        <field name="search_view_id" ref="ubw_sales_report_search"/>
+        <!-- <field name="context">{'search_default_paid':1, 'group_by_no_leaf':1,'group_by':[]}</field> -->
+        <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
+        <field name="help">This report performs analysis on your invoices. Use this report to perform analysis on sales not having invoiced yet.</field>
+    </record>
+
+    <menuitem name="Sales Analysis" id="ubw_menu_sales_analysis_report" parent="ubw_menu_reports" action="action_ubw_sales_report_all" sequence="20"/>
+
+</odoo>

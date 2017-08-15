@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- <record id="res_partner_view_area_form" model="ir.ui.view">
+    	<field name="name">res.partner.view.area.form</field>
+    	<field name="model">res.partner</field>
+    	<field name="inherit_id" ref="base.view_partner_form"/>
+    	<field name="arch" type="xml">
+    	    <field name="country_id" position="after">
+    		<field
+                    name="area_id"
+                    placeholder="Area (For Customers Only)"
+                    options='{"no_open": False, "no_create": True}'
+                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+            />
+            <field
+                    name="city_id"
+                    placeholder="City (For Customers Only)"
+                    options='{"no_open": False, "no_create": True}'
+                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+            />
+    	    </field>
+            <xpath expr="//field[@name='trust']" position="after">
+                <field name="credit_limit"/>
+            </xpath>
+    	</field>
+    </record> -->
+
+    <record id="res_partner_view_x_tree" model="ir.ui.view">
+    	<field name="name">res.partner.view.x.tree</field>
+    	<field name="model">res.partner</field>
+    	<field name="inherit_id" ref="base.view_partner_tree"/>
+    	<field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="user_id" invisible="0"/>
+                <field name="area_id"/>
+                <field name="city_id"/>
+            </field>
+    	</field>
+    </record>
+
+    <record id="res_partner_view_x_search" model="ir.ui.view">
+    	<field name="name">res.partner.view.x.search</field>
+    	<field name="model">res.partner</field>
+    	<field name="inherit_id" ref="base.view_res_partner_filter"/>
+    	<field name="arch" type="xml">
+            <group name="group_by" position="inside">
+                <filter string="Area" context="{'group_by': 'area_id'}"/>
+                <filter string="City" context="{'group_by': 'city_id'}"/>
+            </group>
+    	</field>
+    </record>
+
+    <record id="res_partner_view_x_form" model="ir.ui.view">
+    	<field name="name">res.partner.view.x.form</field>
+    	<field name="model">res.partner</field>
+    	<field name="inherit_id" ref="base.view_partner_form"/>
+        <!-- <field name="mode">primary</field>         -->
+    	<field name="arch" type="xml">
+            <!-- <xpath expr="//field[@name='trust']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath> -->
+    	    <field name="category_id" position="after">
+        		<field
+                        name="area_id"
+                        placeholder="Area (For Customers Only)"
+                        options='{"no_open": False, "no_create": True}'
+                />
+                <field
+                        name="city_id"
+                        placeholder="City (For Customers Only)"
+                        options='{"no_open": False, "no_create": True}'
+                />
+    	    </field>
+            <field name="trust" position="after">
+                <field name="credit_limit"/>
+            </field>
+    	</field>
+    </record>
+
+</odoo>

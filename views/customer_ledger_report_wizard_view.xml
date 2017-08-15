@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- customer_ledger -->
+    <record id="ubw_customer_ledger_wizard" model="ir.ui.view">
+        <field name="name">Customer Ledger Report</field>
+        <field name="model">customer.ledger</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="filters">
+                    <group name="date_range">
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+                    <group name="customers">
+                        <field name="partner_ids" options='{"no_open": False, "no_create": True}' widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="button_export_pdf" string="GENERATE" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="CANCEL" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ubw_customer_ledger_wizard" model="ir.actions.act_window">
+        <field name="name">Customer Ledger</field>
+        <field name="res_model">customer.ledger</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="ubw_customer_ledger_wizard"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Customer Ledger" id="ubw_menu_customer_ledger_report" parent="ubw_menu_reports" action="action_ubw_customer_ledger_wizard" sequence="16"/>
+
+</odoo>

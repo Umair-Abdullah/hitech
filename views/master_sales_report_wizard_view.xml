@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- Master Sales -->
+    <record id="ubw_master_sales_wizard" model="ir.ui.view">
+        <field name="name">Master Sales Report</field>
+        <field name="model">master.sales</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="filters">
+                    <group name="date_range" col="4" colspan="4">
+                        <field name="date_start" colspan="2"/>
+                        <field name="date_end" colspan="2"/>
+                    </group>
+                    <group name="category" col="4" colspan="4">
+                        <field name="category" colspan="4" options='{"no_open": False, "no_create": True}'/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="button_export_pdf" string="Generate" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="CANCEL" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ubw_master_sales_wizard" model="ir.actions.act_window">
+        <field name="name">Master Sales</field>
+        <field name="res_model">master.sales</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="ubw_master_sales_wizard"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Master Sales" id="ubw_menu_master_sales_report" parent="ubw_menu_reports" action="action_ubw_master_sales_wizard" sequence="18"/>
+
+</odoo>

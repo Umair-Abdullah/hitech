@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="view_ubw_product_brand_form">
+        <field name="name">ubw.product.brand.form</field>
+        <field name="model">ubw.product.brand</field>
+        <field name="arch" type="xml">
+            <form string="Brands">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_brand_tree">
+        <field name="name">ubw.product.brand.tree</field>
+        <field name="model">ubw.product.brand</field>
+        <field name="arch" type="xml">
+            <tree string="Brands">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_brand_search">
+        <field name="name">ubw.product.brand.search</field>
+        <field name="model">ubw.product.brand</field>
+        <field name="arch" type="xml">
+            <search string="Brands">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ubw_product_brand">
+        <field name="name">Brands</field>
+        <field name="res_model">ubw.product.brand</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ubw_product_brand_tree"/>
+        <field name="search_view_id" ref="ubw_product_brand_search"/>
+    </record>
+
+    <menuitem name="Brands" id="ubw_menu_product_brand" parent="ubw_menu_sales" action="action_ubw_product_brand" sequence="40"/>
+
+    <record model="ir.ui.view" id="ubw_product_size_tree">
+        <field name="name">ubw.product.size.tree</field>
+        <field name="model">ubw.product.size</field>
+        <field name="arch" type="xml">
+            <tree string="Sizes">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_size_form">
+        <field name="name">ubw.product.size.form</field>
+        <field name="model">ubw.product.size</field>
+        <field name="arch" type="xml">
+            <form string="Sizes">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_size_search">
+        <field name="name">ubw.product.size.search</field>
+        <field name="model">ubw.product.size</field>
+        <field name="arch" type="xml">
+            <search string="Sizes">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ubw_product_size">
+        <field name="name">Sizes</field>
+        <field name="res_model">ubw.product.size</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ubw_product_size_tree"/>
+        <field name="search_view_id" ref="ubw_product_size_search"/>
+    </record>
+
+    <menuitem name="Sizes" id="ubw_menu_product_size" parent="ubw_menu_sales" action="action_ubw_product_size" sequence="41"/>
+
+    <record model="ir.ui.view" id="ubw_product_type_tree">
+        <field name="name">ubw.product.type.tree</field>
+        <field name="model">ubw.product.type</field>
+        <field name="arch" type="xml">
+            <tree string="Types">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_type_form">
+        <field name="name">ubw.product.type.form</field>
+        <field name="model">ubw.product.type</field>
+        <field name="arch" type="xml">
+            <form string="Types">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_type_search">
+        <field name="name">ubw.product.type.search</field>
+        <field name="model">ubw.product.type</field>
+        <field name="arch" type="xml">
+            <search string="Types">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ubw_product_type">
+        <field name="name">Types</field>
+        <field name="res_model">ubw.product.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ubw_product_type_tree"/>
+        <field name="search_view_id" ref="ubw_product_type_search"/>
+    </record>
+
+    <menuitem name="Types" id="ubw_menu_product_type" parent="ubw_menu_sales" action="action_ubw_product_type" sequence="42"/>
+
+    <record model="ir.ui.view" id="ubw_product_spec_tree">
+        <field name="name">ubw.product.spec.tree</field>
+        <field name="model">ubw.product.spec</field>
+        <field name="arch" type="xml">
+            <tree string="Specifications">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_spec_form">
+        <field name="name">ubw.product.spec.form</field>
+        <field name="model">ubw.product.spec</field>
+        <field name="arch" type="xml">
+            <form string="Specifications">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_spec_search">
+        <field name="name">ubw.product.spec.search</field>
+        <field name="model">ubw.product.spec</field>
+        <field name="arch" type="xml">
+            <search string="Specifications">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ubw_product_spec">
+        <field name="name">Specifications</field>
+        <field name="res_model">ubw.product.spec</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ubw_product_spec_tree"/>
+        <field name="search_view_id" ref="ubw_product_spec_search"/>
+    </record>
+
+    <menuitem name="Specifications" id="ubw_menu_product_spec" parent="ubw_menu_sales" action="action_ubw_product_spec" sequence="43"/>
+
+    <record model="ir.ui.view" id="ubw_product_misc_tree">
+        <field name="name">ubw.product.misc.tree</field>
+        <field name="model">ubw.product.misc</field>
+        <field name="arch" type="xml">
+            <tree string="Miscellaneous">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_misc_form">
+        <field name="name">ubw.product.misc.form</field>
+        <field name="model">ubw.product.misc</field>
+        <field name="arch" type="xml">
+            <form string="Miscellaneous">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ubw_product_misc_search">
+        <field name="name">ubw.product.misc.search</field>
+        <field name="model">ubw.product.misc</field>
+        <field name="arch" type="xml">
+            <search string="Miscellaneous">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_ubw_product_misc">
+        <field name="name">Miscellaneous Attributes</field>
+        <field name="res_model">ubw.product.misc</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ubw_product_misc_tree"/>
+        <field name="search_view_id" ref="ubw_product_misc_search"/>
+    </record>
+
+    <menuitem name="Miscellaneous Attributes" id="ubw_menu_product_misc" parent="ubw_menu_sales" action="action_ubw_product_misc" sequence="44"/>
+
+</odoo>

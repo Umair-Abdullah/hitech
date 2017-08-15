@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="xxx.report_customer_ledger">
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <div class="font">
+                        <div class="page">
+                            <br></br>
+                            <div class="text-center">
+                                <h4>
+                                    <strong>Customer Ledger</strong>
+                                </h4>
+                            </div>
+                            <br></br>
+                            <div class="text-center">
+                                <b>Start Date:</b>
+                                <span t-esc="date_start"/>
+                                <b>End Date:</b>
+                                <span t-esc="date_end"/>
+                            </div>
+                            <br></br>
+                            <table class="table">
+                                <thead style="font-size:11px">
+                                    <th>A/C</th>
+                                    <th>Date</th>
+                                    <th>J/V</th>
+                                    <th>Reference</th>
+                                    <th>Narration</th>
+                                    <th class="text-right">Debit</th>
+                                    <th class="text-right">Credit</th>
+                                    <th class="text-right">Balance</th>
+                                </thead>
+                                <tbody style="font-size:10px">
+                                    <t t-set="partner_name" t-value="[]"/>
+                                    <t t-foreach="get_data" t-as="t">
+                                        <t t-set="partner_name" t-value="partner_name+[t['partner']]"/>
+                                    </t>
+
+                                    <t t-foreach="set(partner_name)" t-as="party">
+                                        <!-- <span t-esc="party"/> -->
+                                        <t t-set="balancex" t-value="0.0"/>
+
+                                        <tr t-foreach="get_data" t-as="o">
+                                            <t t-if="party==o['partner']">
+                                                <t t-set="balancex" t-value="o['balance']"/>
+                                                <div>
+                                                    <td class="text-left">
+                                                        <span t-esc="o['account_name']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="o['move_date']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="o['move_name']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="o['move_ref']"/>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span t-esc="o['narration']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="'{0:,.2f}'.format(o['debit'])"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="'{0:,.2f}'.format(o['credit'])"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="'{0:,.2f}'.format(o['balance'])"/>
+                                                    </td>
+                                                </div>
+                                            </t>
+                                        </tr>
+                                        <t t-if="balancex">
+                                            <tr>
+                                                <td class="text-left">
+                                                    <strong t-esc="party"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    -
+                                                </td>
+                                                <td class="text-center">
+                                                    -
+                                                </td>
+                                                <td class="text-center">
+                                                    -
+                                                </td>
+                                                <td class="text-center">
+                                                    -
+                                                </td>
+                                                <td class="text-center">
+                                                    -
+                                                </td>
+                                                <td class="text-center">
+                                                    -
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong t-esc="'{0:,.2f}'.format(balancex)"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- GatePass Module Category -->
+        <record id="ubw_gp_module" model="ir.module.category">
+          <field name="name">Gate-Pass</field>
+          <field name="description">User access level for this module</field>
+          <field name="sequence">200</field>
+        </record>
+
+        <!-- GatePass User Groups -->
+        <record id="group_gp_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="ubw_gp_module"/>
+        </record>
+
+        <record id="group_gp_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('xxx.group_gp_user'))]"/>
+            <field name="category_id" ref="ubw_gp_module"/>
+        </record>
+
+        <!-- Purchase Request Category -->
+        <record id="ubw_pr_module" model="ir.module.category">
+          <field name="name">Purchase-Request</field>
+          <field name="description">User access level for this module</field>
+          <field name="sequence">201</field>
+        </record>
+
+        <!-- Purchase Request User Groups -->
+        <record id="group_pr_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="ubw_pr_module"/>
+        </record>
+
+        <record id="group_pr_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('xxx.group_pr_user'))]"/>
+            <field name="category_id" ref="ubw_pr_module"/>
+        </record>
+
+        <!-- Sales Reporting -->
+        <record id="ubw_sr_module" model="ir.module.category">
+          <field name="name">Sales-Reporting</field>
+          <field name="description">User access level for this module</field>
+          <field name="sequence">202</field>
+        </record>
+
+        <!-- Sales Reporting User Groups -->
+        <record id="group_sr_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="ubw_sr_module"/>
+        </record>
+
+        <record id="group_sr_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('xxx.group_sr_user'))]"/>
+            <field name="category_id" ref="ubw_sr_module"/>
+        </record>
+
+        <!-- GatePass Tags -->
+        <record id="ubw_gp_tags_1" model="ubw.gp.tags">
+            <field name="name">Inward</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="ubw_gp_tags_2" model="ubw.gp.tags">
+            <field name="name">Outward</field>
+            <field name="color">6</field>
+        </record>
+
+        <record id="ubw_gp_tags_3" model="ubw.gp.tags">
+            <field name="name">Returnable</field>
+            <field name="color">4</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_group_ubw_gp_tags_user,ubw.gp.tags.user,xxx.model_ubw_gp_tags,xxx.group_gp_user,1,0,0,0
+access_group_ubw_gp_inward_user,ubw.gp.inward.user,xxx.model_ubw_gp_inward,xxx.group_gp_user,1,1,1,0
+access_group_ubw_gp_inward_line_user,ubw.gp.inward.line.user,xxx.model_ubw_gp_inward_line,xxx.group_gp_user,1,1,1,1
+access_group_ubw_gp_outward_user,ubw.gp.outward.user,xxx.model_ubw_gp_outward,xxx.group_gp_user,1,1,1,0
+access_group_ubw_gp_outward_line_user,ubw.gp.outward.line.user,xxx.model_ubw_gp_outward_line,xxx.group_gp_user,1,1,1,1
+access_group_ubw_gp_outward_print_user,ubw.gp.outward.print.user,xxx.model_ubw_gp_outward_print,xxx.group_gp_user,1,0,0,0
+access_group_ubw_pr_master_user,ubw.pr.master.user,xxx.model_ubw_pr_master,xxx.group_pr_user,1,1,1,0
+access_group_ubw_pr_line_user,ubw.pr.line.user,xxx.model_ubw_pr_line,xxx.group_pr_user,1,1,1,1
+access_group_ubw_sr_stock_move_user,ubw.sr.stock.move.user,stock.model_stock_move,group_sr_user,1,0,0,0
+access_group_ubw_sr_product_brand_user,ubw.sr.product.brand.user,xxx.model_ubw_product_brand,group_sr_user,1,1,1,0
+access_group_ubw_sr_product_size_user,ubw.sr.product.size.user,xxx.model_ubw_product_size,group_sr_user,1,1,1,0
+access_group_ubw_sr_product_type_user,ubw.sr.product.type.user,xxx.model_ubw_product_type,group_sr_user,1,1,1,0
+access_group_ubw_sr_product_spec_user,ubw.sr.product.spec.user,xxx.model_ubw_product_spec,group_sr_user,1,1,1,0
+access_group_ubw_sr_product_misc_user,ubw.sr.product.misc.user,xxx.model_ubw_product_misc,group_sr_user,1,1,1,0
+access_group_ubw_sr_city_user,ubw.sr.city.user,xxx.model_res_partner_city,group_sr_user,1,1,1,0
+access_group_ubw_sr_area_user,ubw.sr.area.user,xxx.model_res_partner_area,group_sr_user,1,1,1,0

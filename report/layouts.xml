@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="xxx.sales_layout">
+        <!-- Multicompany -->
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                </div>
+                <div class="col-xs-4 col-xs-offset-1 text-center">
+                    <span t-esc="company.name"/>
+                </div>
+                <div class="col-xs-2 col-xs-offset-2 text-right">
+                    <ul class="list-inline">
+                        <li><span class="page"/></li>
+                        <li>/</li>
+                        <li><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <h4>
+                        <strong>Master Sales Report</strong>
+                    </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <b>Start Date:</b>
+                    <span t-esc="date_start"/>
+                    <b>End Date:</b>
+                    <span t-esc="date_end"/>
+                </div>
+            </div>
+            <br></br>
+        </div>
+        <!-- <t t-call="xxx.sales_header"/> -->
+        <t t-raw="0" />
+    </template>
+    <!-- <template id="xxx.sales_header">
+        <div class="header">
+            <div class="row">
+                <div class="text-center">
+                    <h4>
+                        <strong>Master Sales Report</strong>
+                    </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <b>Start Date:</b>
+                    <span t-esc="date_start"/>
+                    <b>End Date:</b>
+                    <span t-esc="date_end"/>
+                </div>
+            </div>
+        </div>
+    </template> -->
+
+    <!-- <template id="my_own_layout">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report_extended.my_own_layout_header"/>
+        <t t-raw="0" />
+    </template>
+    <template id="my_own_layout_header">
+        <div class="header">
+            <div class="row">
+               <h1>MY HEADER</h1>
+            </div>
+        </div>
+    </template> -->
+
+</odoo>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_journal_voucher">
+        <t t-name="xxx.report_journal_voucher">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="report.external_layout">
+                            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                            <div class="page">
+                                <h2 align="center">
+                                    Journal Voucher
+                                </h2>
+                                <table class="table table-condensed mt48">
+                                    <thead>
+                                        <tr style="font-size:12px">
+                                            <th> 
+                                                <strong>Voucher</strong>
+                                            </th>
+                                            <th>
+                                                <strong>Journal</strong>
+                                            </th>
+                                            <th> 
+                                                <strong>Date</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td name="ref" style="font-size:12px">
+                                                <span t-field="o.name"/>
+                                            </td>
+                                            <td name="journal" style="font-size:12px">
+                                                <span t-field="o.journal_id"/>
+                                            </td>
+                                            <td name="date" style="font-size:12px">
+                                                <span t-field="o.date"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-responsive table-hover border">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size:12px;width:100px;">
+                                                <strong>Account</strong>
+                                            </th>
+                                            <th style="font-size:12px;width:100px;">
+                                                <strong>Partner</strong>
+                                            </th>
+                                            <th style="font-size:12px;width:100px;">
+                                                <strong>Label</strong>
+                                            </th>
+                                            <th style="font-size:12px;width:100px;">
+                                                <strong>Analytic Account</strong>
+                                            </th>
+                                            <th style="font-size:12px;width:100px;">
+                                                <strong>Debit</strong>
+                                            </th>
+                                            <th style="font-size:12px;width:100px;">
+                                                <strong>Credit</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="var_x" t-value="0.00"/>
+                                        <t t-set="var_y" t-value="0.00"/>
+                                        <tr t-foreach="o.line_ids" t-as="line">
+                                            <td style="font-size:10px">
+                                                <span t-field="line.account_id"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.partner_id"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.analytic_account_id"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.debit"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.credit"/>
+                                            </td>
+                                            <t t-set="var_x" t-value="var_x+line.debit"/>
+                                            <t t-set="var_y" t-value="var_y+line.credit"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px" align="center" valign="middle">
+                                                TOTAL
+                                            </td>
+                                            <td style="font-size:12px" align="center">
+                                                .
+                                            </td>
+                                            <td style="font-size:12px" align="center">
+                                                .
+                                            </td>
+                                            <td style="font-size:12px" align="center">
+                                                .
+                                            </td>
+                                            <td style="font-size:10px" align="left">
+                                                <b>
+                                                    <t t-esc="'{0:,.2f}'.format(float(var_x))"/>
+                                                    <span t-field="o.currency_id.symbol"/>
+                                                </b>
+                                            </td>
+                                            <td style="font-size:10px" align="left">
+                                                <b>
+                                                    <t t-esc="'{0:,.2f}'.format(float(var_y))"/>
+                                                    <span t-field="o.currency_id.symbol"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <b style="font-size:12px">Narration: <span t-field="o.narration"/></b>
+                                <table class="table table-condensed mt48">
+                                    <thead>
+                                        <tr>
+                                            <td name="1" align="center" valign="middle" style="font-size:12px">
+                                                <strong>Timestamp(PDF)</strong>
+                                            </td>
+                                            <td name="1" align="center" valign="middle" style="font-size:12px">
+                                                <strong>Created By</strong>
+                                            </td>
+                                            <td name="2" align="center" valign="middle" style="font-size:12px">
+                                                <strong>Posted By</strong>
+                                            </td>
+                                            <td name="3" align="center" valign="middle" style="font-size:12px">
+                                                <strong>Received By</strong>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td name="4" align="center" valign="middle" style="font-size:12px">
+                                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+                                            </td>
+                                            <td name="4" align="center" valign="middle" style="font-size:12px">
+                                                <span t-field="o.create_uid"/>
+                                            </td>
+                                            <td name="5" align="center" valign="middle" style="font-size:12px">
+                                                <span t-field="o.write_uid"/>
+                                            </td>
+                                            <td name="6" align="center" valign="middle" style="font-size:12px">
+                                                .
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+
+                     </t>
+        </t>
+    </t>
+    </template>
+</odoo>

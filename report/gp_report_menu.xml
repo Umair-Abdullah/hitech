@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Inward GatePass"
+            id="action_report_gp_inward"
+            model="ubw.gp.inward"
+            report_type="qweb-pdf"
+            name="xxx.report_gp_inward"
+            file="xxx.report_gp_inward"
+        />
+        <report
+            string="Outward GatePass"
+            id="action_report_gp_outward"
+            model="ubw.gp.outward"
+            report_type="qweb-pdf"
+            name="xxx.report_gp_outward"
+            file="xxx.report_gp_outward"
+        />
+        <report
+            string="Purchase Request"
+            id="action_report_purchase_request"
+            model="ubw.pr.master"
+            report_type="qweb-pdf"
+            name="xxx.report_purchase_request"
+            file="xxx.report_purchase_request"
+        />
+        <report
+            string="Journal Voucher"
+            id="action_report_journal_voucher"
+            model="account.move"
+            report_type="qweb-pdf"
+            name="xxx.report_journal_voucher"
+            file="xxx.report_journal_voucher"
+        />
+    </data>
+</odoo>

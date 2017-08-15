@@ -1,0 +1,35 @@
+<odoo>
+    <template id="report_partner_list">
+      <t t-call="report.html_container">
+        <t t-call="report.external_layout">
+          <div class="page">
+             <p/>
+             <!-- Report page content -->
+             <div class="row bg-primary">
+                <div class="col-xs-3">Partner</div>
+                <div class="col-xs-2">Sales-Person</div>
+            </div>
+            <t t-foreach="docs" t-as="o">
+              <div class="row">
+                  <div class="col-xs-3">
+                      <h4><span t-field="o.name"/></h4>
+                  </div>
+                  <div class="col-xs-2">
+                      <span t-field="o.user_id"/>
+                  </div>
+              </div>
+            </t>
+          </div>
+        </t>
+      </t>
+    </template>
+
+    <report 
+            string="Partner List"
+            id="action_report_partner_list"
+            model="report.partner.listx"
+            report_type="qweb-html"
+            name="xxx.report_partner_list"
+            file="xxx.report_partner_list"
+    />
+</odoo>

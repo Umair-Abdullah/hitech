@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_gp_outward">
+            <t t-name="xxx.report_gp_outward">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="report.internal_layout">
+                            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                            <div class="page">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td align="center" name="title" valign="middle" style="font-size:18px">
+                                            <b>Gate-Pass</b>
+                                        </td>
+                                        <!-- <td align="left" name="xdate" valign="middle" style="font-size:12px">
+                                            Timestamp: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M')"/>
+                                        </td> -->
+                                        <t t-set="var_y" t-value="''"/>
+                                        <td align="right" name="xcopy" valign="middle" style="font-size:12px">
+                                            <!-- <tr t-foreach="o.outward_gp_print" t-as="line">
+                                                <t t-set="var_y" t-value="line.name"/>
+                                            </tr> -->
+                                            <t t-foreach="o.outward_gp_print" t-as="line">
+                                                <t t-set="var_y" t-value="line.name"/>
+                                            </t>
+                                            <span t-esc="var_y"/>
+                                            <!-- <span t-field="o.outward_gp_print.name"/> -->
+                                        </td>
+                                    </tr>
+                                </table>
+                                <h2>
+                                    <table class="table table-responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td name="11" align="left" valign="middle">
+                                                    <br/>
+                                                    <strong><u><span t-field="o.name"/></u></strong>
+                                                    <t t-if="o.state=='draft'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<u>*Draft</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='submit'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<u>*Submit</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='approved'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<u>*Approved</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='cancelled'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<u>*Cancelled</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='done'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<u>*Done</u></strong>
+                                                    </t>
+                                                </td>
+                                                <td t-foreach="o.tag_ids" t-as="tag" name="33" align="left" valign="middle">
+                                                    <br/>
+                                                    <strong><u>*<span t-field="tag.name"/></u></strong>
+                                                </td>
+                                                <td name="22" align="right" valign="middle">
+                                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.name, 60, 60)" style="width:60px;height:60px"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </h2>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size:12px">
+                                                <strong>Date</strong>
+                                            </th>
+                                            <th style="font-size:12px">
+                                                <strong>User</strong>
+                                            </th>
+                                            <th style="font-size:12px">
+                                                <strong>Partner / Party</strong>
+                                            </th>
+                                            <th style="font-size:12px">
+                                                <strong>Outgoing Shipment</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td name="date" style="font-size:12px">
+                                                <span t-field="o.date"/>
+                                            </td>
+                                            <td name="user_id" style="font-size:12px">
+                                                <span t-field="o.user_id"/>
+                                            </td>
+                                            <td name="partner_id" style="font-size:12px">
+                                                <t t-if="o.partner_id">
+                                                    <span t-field="o.partner_id"/>
+                                                </t>
+                                                <t t-if="not o.partner_id">
+                                                    <strong>*Consolidate</strong>
+                                                </t>
+                                            </td>
+                                            <td name="shipment_id" style="font-size:12px">
+                                                <t t-if="o.shipment_id">
+                                                    <t t-if="o.consolidate">
+                                                        <strong>*Line Item</strong>
+                                                    </t>
+                                                    <t t-if="not o.consolidate">
+                                                        <span t-field="o.shipment_id"/>
+                                                    </t>
+                                                </t>
+                                                <t t-if="not o.shipment_id">
+                                                    <t t-if="o.consolidate">
+                                                        *Line Item&gt;
+                                                    </t>
+                                                    <t t-if="not o.consolidate">
+                                                        *Without Any Shipment
+                                                    </t>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size:12px">
+                                                <strong>From</strong>
+                                            </th>
+                                            <th style="font-size:12px">
+                                                <strong>To</strong>
+                                            </th>
+                                            <th style="font-size:12px">
+                                                <strong>Return Date</strong>
+                                            </th>
+                                            <th style="font-size:12px">
+                                                <strong>Actual Return Date</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td name="src_location_id" style="font-size:12px">
+                                                <span t-field="o.src_location_id"/>
+                                            </td>
+                                            <td name="dest_location_id" style="font-size:12px">
+                                                <span t-field="o.dest_location_id"/>
+                                            </td>
+                                            <td name="return_date" style="font-size:12px">
+                                                <span t-field="o.return_date"/>
+                                            </td>
+                                            <td name="actual_return_date" style="font-size:12px">
+                                                <span t-field="o.actual_return_date"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed mt48">
+                                    <thead>
+                                        <tr>
+                                            <t t-if="o.consolidate">
+                                                <th style="font-size:10px">Shipment</th>
+                                                <th style="font-size:10px">Party</th>
+                                            </t>
+                                            <th style="font-size:10px">Product</th>
+                                            <th style="font-size:10px">UOM</th>
+                                            <th style="font-size:10px">No. of Bag(s)</th>
+                                            <th style="font-size:10px">Qty Per Bag</th>
+                                            <th style="font-size:10px">No. of Crtn(s)</th>
+                                            <th style="font-size:10px">Carton Number</th>
+                                            <th style="font-size:10px">Ordered Qty</th>
+                                            <th style="font-size:10px">Real Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="var_x" t-value="0"/>
+                                        <tr t-foreach="o.outward_gp_line" t-as="line">
+                                            <t t-if="o.consolidate">
+                                                <td style="font-size:10px">
+                                                    <span t-field="line.shipment_id"/>
+                                                </td>
+                                                <td style="font-size:10px">
+                                                    <span t-field="line.partner_id"/>
+                                                </td>
+                                            </t>
+                                            <!-- <td style="font-size:10px">
+                                                <span t-field="line.product_id"/>
+                                            </td> -->
+                                            <t t-if="not line.use_alternate">
+                                                <td style="font-size:10px">
+                                                    <span t-field="line.product_id"/>
+                                                </td>
+                                            </t>
+                                            <t t-if="line.use_alternate">
+                                                <td style="font-size:10px">
+                                                    <span t-field="line.product_text"/>
+                                                </td>
+                                            </t>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.product_uom"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.no_of_bag"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.qty_per_bag"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.no_of_carton"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.carton_number"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.ordered_qty"/>
+                                            </td>
+                                            <td style="font-size:10px">
+                                                <span t-field="line.product_qty"/>
+                                            </td>
+                                            <t t-set="var_x" t-value="var_x+line.product_qty"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <strong>Note:</strong>
+                                <p t-field="o.note"/>
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td name="1" align="left" valign="baseline">
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <strong>Signature: _________________</strong>
+                                            </td>
+                                            <td name="1" align="left" valign="baseline">
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <strong>Approved By: <u><span t-field="o.manager_id"/></u></strong>
+                                            </td>
+                                            <td name="3" align="right" valign="baseline">
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <strong>TOTAL QTY = [<t t-esc="var_x"/>]</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                 </t>
+            </t>
+        </t>
+    </template>
+</odoo>

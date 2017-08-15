@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="xxx.report_credit_aging">
+            <t t-call="report.html_container">
+                <t t-call="report.internal_layout">
+                    <div class="font">
+                        <div class="page">
+                            <br></br>
+                            <div class="text-center">
+                                <h4>
+                                    <strong>Credit Aging Report</strong>
+                                </h4>
+                            </div>
+                            <br></br>
+                            <table class="table">
+                                <thead style="font-size:10px">
+                                    <th>Customer</th>
+                                    <th class="text-right">Limit</th>
+                                    <th>Salesperson</th>
+                                    <th>Team</th>
+                                    <th>City</th>
+                                    <th>Market</th>
+                                    <th class="text-right">000 - 030</th>
+                                    <th class="text-right">030 - 060</th>
+                                    <th class="text-right">060 - 090</th>
+                                    <th class="text-right">090 - 120</th>
+                                    <th class="text-right">Older</th>
+                                    <th class="text-right">Total</th>
+                                </thead>
+                                <tbody style="font-size:9px">
+                                    <!-- <t t-set="product_category" t-value="[]"/>
+                                    <t t-foreach="o.order_line" t-as="l">
+                                        <t t-set="product_category" t-value="product_category+[l.product_id.categ_id]"/>
+                                    </t>
+                                    <t t-foreach="set(product_category)" t-as="category">
+                                        <div><strong t-esc="category.name"/></div>
+                                        <t t-foreach="o.order_line" t-as="l">
+                                            <t t-if="category.id==l.product_id.categ_id.id">
+                                                <div><span t-field="l.product_id"/></div>
+                                            </t>
+                                        </t>
+                                    </t> -->
+
+                                    <t t-set="team_name" t-value="[]"/>
+                                    <t t-foreach="get_data" t-as="t">
+                                        <t t-set="team_name" t-value="team_name+[t['team_name']]"/>
+                                    </t>
+
+                                    <t t-set="sales_person" t-value="[]"/>
+                                    <t t-foreach="get_data" t-as="t">
+                                        <t t-set="sales_person" t-value="sales_person+[t['user_name']]"/>
+                                    </t>
+
+                                    <t t-set="d0130xx" t-value="0.0"/>
+                                    <t t-set="d3160xx" t-value="0.0"/>
+                                    <t t-set="d6190xx" t-value="0.0"/>
+                                    <t t-set="d91120xx" t-value="0.0"/>
+                                    <t t-set="d120pxx" t-value="0.0"/>
+                                    <t t-set="balxxx" t-value="0.0"/>
+
+                                    <t t-foreach="set(team_name)" t-as="team">
+                                        <t t-set="d0130" t-value="0.0"/>
+                                        <t t-set="d3160" t-value="0.0"/>
+                                        <t t-set="d6190" t-value="0.0"/>
+                                        <t t-set="d91120" t-value="0.0"/>
+                                        <t t-set="d120p" t-value="0.0"/>
+                                        <t t-set="balx" t-value="0.0"/>
+
+                                        <t t-foreach="set(sales_person)" t-as="sp">
+                                            <t t-set="d0130x" t-value="0.0"/>
+                                            <t t-set="d3160x" t-value="0.0"/>
+                                            <t t-set="d6190x" t-value="0.0"/>
+                                            <t t-set="d91120x" t-value="0.0"/>
+                                            <t t-set="d120px" t-value="0.0"/>
+                                            <t t-set="balxx" t-value="0.0"/>
+
+                                            <tr t-foreach="get_data" t-as="o">
+                                                <t t-if="team==o['team_name']">
+                                                    <t t-if="sp==o['user_name']">
+                                                        <t t-set="d0130" t-value="d0130+o['d0130']"/>
+                                                        <t t-set="d3160" t-value="d3160+o['d3160']"/>
+                                                        <t t-set="d6190" t-value="d6190+o['d6190']"/>
+                                                        <t t-set="d91120" t-value="d91120+o['d91120']"/>
+                                                        <t t-set="d120p" t-value="d120p+o['d120plus']"/>
+                                                        <t t-set="balx" t-value="balx+o['total']"/>
+
+                                                        <t t-set="d0130x" t-value="d0130x+o['d0130']"/>
+                                                        <t t-set="d3160x" t-value="d3160x+o['d3160']"/>
+                                                        <t t-set="d6190x" t-value="d6190x+o['d6190']"/>
+                                                        <t t-set="d91120x" t-value="d91120x+o['d91120']"/>
+                                                        <t t-set="d120px" t-value="d120px+o['d120plus']"/>
+                                                        <t t-set="balxx" t-value="balxx+o['total']"/>
+
+                                                        <t t-set="d0130xx" t-value="d0130xx+o['d0130']"/>
+                                                        <t t-set="d3160xx" t-value="d3160xx+o['d3160']"/>
+                                                        <t t-set="d6190xx" t-value="d6190xx+o['d6190']"/>
+                                                        <t t-set="d91120xx" t-value="d91120xx+o['d91120']"/>
+                                                        <t t-set="d120pxx" t-value="d120pxx+o['d120plus']"/>
+                                                        <t t-set="balxxx" t-value="balxxx+o['total']"/>
+
+                                                        <div>
+                                                            <td class="text-left">
+                                                                <span t-esc="'[' + str(o['partner_code']) + '] ' + str(o['partner_name'] or 'N/A')"/>
+                                                            </td>
+                                                            <td class="text-right">
+                                                              <t t-if="o['limitx']">
+                                                                  <span t-esc="'{0:,.0f}'.format(o['limitx'])"/>
+                                                              </t>
+                                                              <t t-if="not o['limitx']">
+                                                                  <strong>0</strong>
+                                                              </t>
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <t t-if="o['user_name']">
+                                                                    <span t-esc="o['user_name']"/>
+                                                                </t>
+                                                                <t t-if="not o['user_name']">
+                                                                    <strong>N/A</strong>
+                                                                </t>
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <t t-if="o['team_name']">
+                                                                    <span t-esc="o['team_name']"/>
+                                                                </t>
+                                                                <t t-if="not o['team_name']">
+                                                                    <strong>N/A</strong>
+                                                                </t>
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <t t-if="o['city_name']">
+                                                                    <span t-esc="o['city_name']"/>
+                                                                </t>
+                                                                <t t-if="not o['city_name']">
+                                                                    <strong>N/A</strong>
+                                                                </t>
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <t t-if="o['area_name']">
+                                                                    <span t-esc="o['area_name']"/>
+                                                                </t>
+                                                                <t t-if="not o['area_name']">
+                                                                    <strong>N/A</strong>
+                                                                </t>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <span t-esc="'{0:,.2f}'.format(o['d0130'])"/>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <span t-esc="'{0:,.2f}'.format(o['d3160'])"/>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <span t-esc="'{0:,.2f}'.format(o['d6190'])"/>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <span t-esc="'{0:,.2f}'.format(o['d91120'])"/>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <span t-esc="'{0:,.2f}'.format(o['d120plus'])"/>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <span t-esc="'{0:,.2f}'.format(o['total'])"/>
+                                                            </td>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </tr>
+                                            <t t-if="balxx">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <strong t-esc="sp"/> - TOTAL
+                                                    </td>
+                                                    <td class="text-right">
+                                                        .
+                                                    </td>
+                                                    <td class="text-left">
+                                                        .
+                                                    </td>
+                                                    <td class="text-left">
+                                                        .
+                                                    </td>
+                                                    <td class="text-left">
+                                                        .
+                                                    </td>
+                                                    <td class="text-left">
+                                                        .
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong t-esc="'{0:,.2f}'.format(d0130x)"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong t-esc="'{0:,.2f}'.format(d3160x)"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong t-esc="'{0:,.2f}'.format(d6190x)"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong t-esc="'{0:,.2f}'.format(d91120x)"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong t-esc="'{0:,.2f}'.format(d120px)"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong t-esc="'{0:,.2f}'.format(balxx)"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <tr>
+                                            <td class="text-left">
+                                                <!-- <strong t-esc="team.upper()"/> - TOTAL -->
+                                                <strong t-esc="team"/> - TOTAL
+                                            </td>
+                                            <td class="text-right">
+                                                .
+                                            </td>
+                                            <td class="text-left">
+                                                .
+                                            </td>
+                                            <td class="text-left">
+                                                .
+                                            </td>
+                                            <td class="text-left">
+                                                .
+                                            </td>
+                                            <td class="text-left">
+                                                .
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(d0130)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(d3160)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(d6190)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(d91120)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(d120p)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <strong t-esc="'{0:,.2f}'.format(balx)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td class="text-left">
+                                            <strong>G R A N D  -  T O T A L</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            .
+                                        </td>
+                                        <td class="text-left">
+                                            .
+                                        </td>
+                                        <td class="text-left">
+                                            .
+                                        </td>
+                                        <td class="text-left">
+                                            .
+                                        </td>
+                                        <td class="text-left">
+                                            .
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(d0130xx)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(d3160xx)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(d6190xx)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(d91120xx)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(d120pxx)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(balxxx)"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

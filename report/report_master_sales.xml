@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="xxx.report_master_sales">
+            <t t-call="report.html_container">
+                <t t-call="xxx.sales_layout">
+                    <div class="font">
+                        <div class="page">
+                            <!-- <br></br>
+                            <div class="text-center">
+                                <h4>
+                                    <strong>Master Sales Report</strong>
+                                </h4>
+                            </div>
+                            <div class="text-center">
+                                <b>Start Date:</b>
+                                <span t-esc="date_start"/>
+                                <b>End Date:</b>
+                                <span t-esc="date_end"/>
+                            </div>
+                            <br></br> -->
+                            <table class="table">
+                                <thead style="font-size:9px">
+                                    <th>Invoice</th>
+                                    <th>Date</th>
+                                    <th>State</th>
+                                    <th>Order</th>
+                                    <th>SP</th>
+                                    <th>Team</th>
+                                    <th>Customer</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Brand</th>
+                                    <th>Size</th>
+                                    <th>Type</th>
+                                    <th>Spec</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>QTY</th>
+                                    <th>UOM</th>
+                                    <th>Discount</th>
+                                    <th>Gross</th>
+                                    <th>Net</th>
+                                </thead>
+                                <tbody style="font-size:7px">
+                                    <tr t-foreach="get_data" t-as="o">
+                                        <td class="text-left">
+                                            <span t-esc="o['invoice_number']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['date']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['state'].title()"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['order_number']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['sales_person']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['team_name']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['customer_name']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_code']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_name']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_brand']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_size']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_type']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_spec']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_category']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['price_unit']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['quantity']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['product_uom']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['discount']"/>%
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['gross_val']"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="o['net_val']"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

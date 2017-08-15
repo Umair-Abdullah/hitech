@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_purchase_request">
+        <t t-name="xxx.report_purchase_request">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="report.internal_layout">
+<!--
+                            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+-->
+                            <div class="page">
+                                <table class="table table-condensed">
+                                    <tr style="font-size:18px">
+                                        <td align="center" name="title" valign="middle">
+                                            <br></br>
+                                            <b>Purchase Request</b>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <h2>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td name="11" align="left" valign="middle">
+                                                    <br/>
+                                                    <br/>
+                                                    <strong><u><span t-field="o.name"/></u></strong>
+                                                    <t t-if="o.state=='draft'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;<u>*Draft</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='submit'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;<u>*Submit</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='cancelled'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;<u>*Cancelled</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='approved'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;<u>*Approved</u></strong>
+                                                    </t>
+                                                    <t t-if="o.state=='done'">
+                                                        <strong>&#160;&#160;&#160;&#160;&#160;&#160;<u>*Done</u></strong>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </h2>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <strong>Request Date</strong>
+                                            </th>
+                                            <th> 
+                                                <strong>Required Date</strong>
+                                            </th>
+                                            <th> 
+                                                <strong>Requested By</strong>
+                                            </th>
+                                            <th> 
+                                                <strong>Request For</strong>
+                                            </th>
+                                            <th>
+                                                <strong>Approve By</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td name="date_request">
+                                                <span t-field="o.date_request"/>
+                                            </td>
+                                            <td name="date_required">
+                                                <span t-field="o.date_required"/>
+                                            </td>
+                                            <td name="user_id_1">
+                                                <span t-field="o.user_id_1"/>
+                                            </td>
+                                            <td name="partner_id">
+                                                <span t-field="o.partner_id"/>
+                                            </td>
+                                            <td name="user_id_2">
+                                                <span t-field="o.user_id_2"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <strong>Destination Location</strong>
+                                            </th>
+                                            <th>
+                                                <strong>Submited On</strong>
+                                            </th>
+                                            <th>
+                                                <strong>Approved On</strong>
+                                            </th>
+                                            <th>
+                                                <strong>Done</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td name="dest_location_id">
+                                                <span t-field="o.dest_location_id"/>
+                                            </td>
+                                            <td name="date_submit">
+                                                <span t-field="o.date_submit"/>
+                                            </td>
+                                            <td name="date_approve">
+                                                <span t-field="o.date_approve"/>
+                                            </td>
+                                            <td name="date_done">
+                                                <span t-field="o.date_done"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed mt48">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>Product</strong></th>
+                                            <th><strong>UOM</strong></th>
+                                            <th><strong>Required Qty</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="var_x" t-value="0"/>
+                                        <tr t-foreach="o.purchase_request_line" t-as="line">
+                                            <td><span t-field="line.product_id"/></td>
+                                            <td><span t-field="line.product_uom"/></td>
+                                            <td>
+                                                <span t-field="line.product_qty"/>
+                                            </td>
+                                            <t t-set="var_x" t-value="var_x+line.product_qty"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <strong>Note:</strong>
+                                <p t-field="o.note"/>
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td name="1" align="left" valign="baseline">
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <strong>Signature:__________________</strong>
+                                            </td>
+                                            <td name="3" align="right" valign="baseline">
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <strong>TOTAL QTY = [<t t-esc="var_x"/>]</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                     </t>
+            </t>
+        </t>
+    </template>
+</odoo>

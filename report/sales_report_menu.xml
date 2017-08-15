@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_report_report_saif_query"
+            model="saif.query"
+            string="Saif Query X"
+            report_type="qweb-pdf"
+            name="xxx.report_saif_query"
+            file="xxx.report_saif_query"
+            menu="False"
+            auto="False"
+        />
+
+        <report
+            id="action_report_report_master_sales"
+            model="master.sales"
+            string="Master Sales"
+            report_type="qweb-pdf"
+            name="xxx.report_master_sales"
+            file="xxx.report_master_sales"
+            menu="False"
+            auto="False"
+        />
+
+        <report
+            id="action_report_report_credit_aging"
+            model="credit.aging"
+            string="Credit Aging"
+            report_type="qweb-pdf"
+            name="xxx.report_credit_aging"
+            file="xxx.report_credit_aging"
+            menu="False"
+            auto="False"
+        />
+
+        <report
+            id="action_report_report_credit_agingx"
+            model="credit.aging"
+            string="Credit Aging"
+            report_type="qweb-pdf"
+            name="xxx.report_credit_agingx"
+            file="xxx.report_credit_agingx"
+            menu="False"
+            auto="False"
+        />
+
+        <report
+            id="action_report_report_customer_ledger"
+            model="customer.ledger"
+            string="Customer Ledger"
+            report_type="qweb-pdf"
+            name="xxx.report_customer_ledger"
+            file="xxx.report_customer_ledger"
+            menu="False"
+            auto="False"
+        />
+
+        <record id="paperformat_lowmargin" model="report.paperformat">
+            <field name="name">European A4 Low Margin</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">4</field>
+            <field name="margin_bottom">2</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">3</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="xxx.action_report_report_saif_query" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="xxx.paperformat_lowmargin" />
+        </record>
+
+        <record id="xxx.action_report_report_master_sales" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="xxx.paperformat_lowmargin" />
+        </record>
+
+        <record id="xxx.action_report_report_credit_aging" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="xxx.paperformat_lowmargin" />
+        </record>
+    </data>
+</odoo>

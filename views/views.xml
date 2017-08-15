@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+  <data>
+    <!-- Top menu item -->
+    <menuitem name="UBW" id="ubw_menu_root" web_icon="xxx,static/description/icon.png" sequence="500"/>
+    <!-- Sub menu GatePass -->
+    <menuitem name="GatePass" id="ubw_menu_gp" parent="ubw_menu_root" sequence="10"/>
+    <!-- Sub menu Purchase -->
+    <menuitem name="Purchase" id="ubw_menu_pr" parent="ubw_menu_root" sequence="20"/>
+    <!-- Sub menu Sales -->
+    <menuitem name="Sales" id="ubw_menu_sales" parent="ubw_menu_root" sequence="30"/>
+    <!-- Sub menu Reports -->
+    <menuitem name="Reports" id="ubw_menu_reports" parent="ubw_menu_root" sequence="50"/>
+
+<!--
+    <record model="ir.ui.view" id="view_partner_list_pivot">
+        <field name="name">partner.list.pivot</field>
+        <field name="model">report.partner.list</field>
+        <field name="arch" type="xml">
+            <pivot string="Partner List" disable_linking="True">
+                <field name="partner_id" type="col"/>
+                <field name="user_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+-->
+
+    <!-- <record model="ir.ui.view" id="view_ubw_partner_list_search">
+        <field name="name">Partner List</field>
+        <field name="model">report.partner.list</field>
+        <field name="arch" type="xml">
+            <search string="Partner Search">
+                <field name="partner_id"/>
+                <field name="user_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_partner_list_tree">
+      <field name="name">Partner List</field>
+      <field name="model">report.partner.list</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="partner_id"/>
+          <field name="user_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_report_partner_list" model="ir.actions.act_window">
+        <field name="name">Partner List</field>
+        <field name="res_model">report.partner.list</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_ubw_partner_list_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <menuitem name="Partner List" id="ubw_menu_report_partner_list" parent="ubw_menu_reports" action="action_report_partner_list" sequence="20"/> -->
+
+<!--
+xxx
+-->
+    <!-- GatePass Tags -->
+    <record model="ir.ui.view" id="view_ubw_gp_tags_form">
+      <field name="name">Tags</field>
+      <field name="model">ubw.gp.tags</field>
+      <field name="arch" type="xml">
+            <form string="Tags Form">
+                <sheet>
+                    <group>
+                        <group col="6" colspan="4">
+                            <field name='name'/>
+                            <field name='color'/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_gp_tags_tree">
+      <field name="name">Tags</field>
+      <field name="model">ubw.gp.tags</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="color"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_ubw_gp_tags">
+      <field name="name">Tags</field>
+      <field name="res_model">ubw.gp.tags</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name='view_id' ref='view_ubw_gp_tags_tree'/>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Tags" id="ubw_menu_gp_tags" parent="ubw_menu_gp" action="action_ubw_gp_tags" sequence="20"/>
+
+    <!-- GatePass Email setup -->
+    <record model="ir.ui.view" id="view_ubw_gp_email_setup_tree">
+      <field name="name">Email Setup</field>
+      <field name="model">ubw.gp.email.setup</field>
+      <field name="arch" type="xml">
+        <tree editable="top">
+          <field name="name"/>
+          <field name="email_address" widget="email"/>
+          <field name="inward"/>
+          <field name="outward"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_ubw_gp_email_setup">
+      <field name="name">Email Setup</field>
+      <field name="res_model">ubw.gp.email.setup</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree</field>
+      <field name='view_id' ref='view_ubw_gp_email_setup_tree'/>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Email Setup" id="ubw_menu_gp_email_setup" parent="ubw_menu_gp" action="action_ubw_gp_email_setup" sequence="25"/>
+
+    <!-- Inward GatePass -->
+    <record model="ir.ui.view" id="view_ubw_gp_inward_form">
+      <field name="name">Inward</field>
+      <field name="model">ubw.gp.inward</field>
+      <field name="arch" type="xml">
+            <form string="Inward Form">
+                <header>
+                    <button name="action_inchecking" states="draft" string="Inchecking" type="object" class="oe_highlight"/>
+                    <button name="action_cancel" states="draft,inchecking" string="Cancel" type="object" class="oe_highlight"/>
+                    <button name="action_print" states="inchecking,done" string="Print" type="object" class="oe_highlight"/>
+                    <button name="action_done" states="inchecking" string="Done" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,inchecking,cancelled,done"/>
+                </header>
+                <sheet>
+                    <h1 class="hidden-xs">
+                        <field name="name" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group col="4" colspan="4">
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="partner_id" options='{"no_open": False, "no_create": True}'/>
+                            <field name="src_location_id" options='{"no_open": False, "no_create": True}'/>
+                            <field name="dest_location_id" options='{"no_open": False, "no_create": True}'/>
+                            <!-- <field name="shipment_id"/> -->
+                            <field name="shipment_id" domain="[('state', '!=', 'cancel'), ('location_dest_id', '=', dest_location_id), ('partner_id', '=', partner_id)]" options='{"no_open": False, "no_create": True}'/>
+                            <field name="tag_ids" options='{"no_open": False, "no_create": True}' widget="many2many_tags"/>
+                            <!-- <field name="tag_ids" widget="many2many_tags"/> -->
+                            <button name="action_get_shipment_lines" colspan="2" attrs="{'invisible': ['|',('state', '!=', 'draft'),('shipment_id', '&lt;', 1)]}" string="Get Shipment Lines" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="inward_gp_line">
+                                <tree colspan="4" editable="bottom" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+                                    <field name="gp_id" context="{'gp_id':parent.id}" invisible="1"/>
+                                    <field name="shipment_id" context="{'shipment_id':parent.shipment_id}" invisible="1"/>
+                                    <field name="product_id" invisible="0" attrs="{'readonly':[('use_alternate', '=', True)]}" options='{"no_open": False, "no_create": True}'/>
+                                    <field name="use_alternate" invisible="0"/>
+                                    <field name="product_text" invisible="0" attrs="{'readonly':[('use_alternate', '=', False)]}"/>
+                                    <field name="product_uom" invisible="0"/>
+                                    <field name="product_uom_text" invisible="0" attrs="{'readonly':[('use_alternate', '=', False)], 'invisible':[('use_alternate', '=', False)]}"/>
+                                    <field name="ordered_qty" invisible="0"/>
+                                    <field name="product_qty" invisible="0"/>
+                                </tree>
+                            </field>
+                            <field name="note" placeholder="Add an internal note that will be printed on the GatePass" class="oe_inline" colspan="4"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="xxx.group_gp_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_gp_inward_search">
+        <field name="name">Inward</field>
+        <field name="model">ubw.gp.inward</field>
+        <field name="arch" type="xml">
+            <search string="Inward Search">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="tag_ids"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="shipment_id"/>
+                <field name="src_location_id"/>
+                <field name="dest_location_id"/>
+                <field name="state"/>
+                <filter string="My GatePasses" domain="[('user_id', '=', uid)]" name="my_gps"/>
+                <separator/>
+                <filter string="Draft" domain="[('state', '=', 'draft')]" name="draft"/>
+                <filter string="In-Checking" domain="[('state', '=', 'inchecking')]" name="inchecking"/>
+                <filter string="Cancelled" domain="[('state', '=', 'cancelled')]" name="cancelled"/>
+                <separator/>
+                <filter string="Done" domain="[('state', '=', 'done')]" name="done"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                    <filter string="Partner" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="User" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="Shipment" name="shipment_id" context="{'group_by':'shipment_id'}"/>
+                    <filter string="Source Location" name="src_location_id" context="{'group_by':'src_location_id'}"/>
+                    <filter string="Destination Location" name="dest_location_id" context="{'group_by':'dest_location_id'}"/>
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_gp_inward_tree">
+      <field name="name">Inward</field>
+      <field name="model">ubw.gp.inward</field>
+      <field name="arch" type="xml">
+        <tree decoration-info="state == 'draft'" decoration-bf="state == 'inchecking'" decoration-muted="state == 'cancelled'" decoration-success="state == 'done'" string="Inward GatePass list">
+          <field name="name"/>
+          <field name="date"/>
+          <field name="tag_ids"/>
+          <field name="partner_id"/>
+          <field name="shipment_id"/>
+          <field name="user_id"/>
+          <field name="src_location_id"/>
+          <field name="dest_location_id"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Kanban View  -->
+    <record model="ir.ui.view" id="view_ubw_gp_inward_kanban">
+        <field name="name">Inward</field>
+        <field name="model">ubw.gp.inward</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong><span><t t-esc="record.name.value"/></span></strong>
+                                </div>
+                                <div class="col-xs-6 pull-right text-right">
+                                    <field name="state" widget="kanban_label_selection" options="{'classes': {'draft': 'default', 'cancelled': 'default', 'done': 'success', 'inchecking': 'warning'}}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong><span><t t-esc="record.partner_id.value"/></span></strong>
+                                </div>
+                                <div class="col-xs-6 pull-right text-right">
+                                    <strong><span><t t-esc="record.user_id.value"/></span></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_ubw_gp_inward">
+      <field name="name">Inward</field>
+      <field name="res_model">ubw.gp.inward</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="search_view_id" ref="view_ubw_gp_inward_search"/>
+      <field name='view_id' ref='view_ubw_gp_inward_tree'/>
+      <field name="context">{'search_default_my_gps': True}</field>
+      <field name="help" type="html">
+          <p>
+              No GatePass to display.
+          </p>
+      </field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Inward" id="ubw_menu_gp_inward" parent="ubw_menu_gp" action="action_ubw_gp_inward" sequence="11"/>
+
+    <!-- Outward GatePass -->
+    <record model="ir.ui.view" id="view_ubw_gp_outward_form">
+      <field name="name">Outward</field>
+      <field name="model">ubw.gp.outward</field>
+      <field name="arch" type="xml">
+            <form string="Outward Form">
+                <header>
+                    <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
+                    <button name="action_cancel" states="draft,submit" string="Cancel" type="object" class="oe_highlight"/>
+                    <button name="action_print" states="submit,approved" string="Print" type="object" class="oe_highlight"/>
+                    <button name="action_approve" states="submit" string="Approve" type="object" class="oe_highlight" groups="xxx.group_gp_manager"/>
+                    <button name="action_done" states="approved" string="Done" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,cancelled,approved,done"/>
+                </header>
+                <sheet>
+                    <h1 class="hidden-xs">
+                        <field name="name" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group col="4" colspan="4">
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="consolidate"/>
+                            <field name="partner_id" attrs="{'invisible':[('consolidate', '=', True)], 'required':[('consolidate', '=', False)]}" options='{"no_open": False, "no_create": True}'/>
+                            <field name="src_location_id" options='{"no_open": False, "no_create": True}'/>
+                            <field name="dest_location_id" options='{"no_open": False, "no_create": True}'/>
+                            <!-- <field name="shipment_id" domain="[('state', '!=', 'cancel'), ('location_id', '=', src_location_id), ('partner_id', '=', partner_id)]" options='{"no_open": False, "no_create": True}'/> -->
+                            <field name="shipment_id" domain="[('state', '!=', 'cancel'), ('location_id', '=', src_location_id), ('origin', 'ilike', 'SO%')]" options='{"no_open": False, "no_create": True}'/>
+                            <field name="tag_ids" widget="many2many_tags" options='{"no_open": False, "no_create": True}'/>
+                            <field name="returnable" invisible="1"/>
+                            <field name="return_date" attrs="{'invisible':[('returnable', '=', False)], 'required':[('returnable', '=', True)]}"/>
+                            <field name="actual_return_date" attrs="{'invisible':[('returnable', '=', False), ('state', '=', 'approved')]}"/>
+                            <field name="manager_id"/>
+                            <field name="flagx" invisible="1"/>
+                            <button name="action_get_shipment_lines" colspan="2" attrs="{'invisible': ['|', ('flagx', '=', True),'|',('state', '!=', 'draft'),'|',('shipment_id', '&lt;', 1)]}" string="Get Shipment Lines" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="outward_gp_line">
+                                <tree colspan="4" editable="bottom" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+                                    <field name="gp_id" context="{'gp_id':parent.id}" invisible="1"/>
+                                    <field name="consolidate" invisible="1"/>
+                                    <field name="shipment_id" context="{'shipment_id':parent.shipment_id}" attrs="{'invisible':[('consolidate','=',False)]}"/>
+                                    <field name="partner_id" context="{'partner_id':parent.partner_id}" attrs="{'invisible':[('consolidate','=',False)]}"/>
+                                    <field name="product_id" invisible="0" attrs="{'readonly':[('use_alternate', '=', True)]}" options='{"no_open": False, "no_create": True}'/>
+                                    <field name="use_alternate" invisible="0"/>
+                                    <field name="product_text" invisible="0" attrs="{'readonly':[('use_alternate', '=', False)]}"/>
+                                    <field name="product_uom" invisible="0"/>
+                                    <field name="ordered_qty" invisible="0"/>
+                                    <!-- <field name="readonlytest" invisible="1"/> -->
+                                    <!-- <field name="product_qty" invisible="0" attrs="{'readonly':[('readonlytest', '=', True)]}"/> -->
+                                    <field name="product_qty" invisible="0"/>
+                                    <field name="no_of_bag" invisible="0"/>
+                                    <field name="qty_per_bag" invisible="0"/>
+                                    <field name="no_of_carton" invisible="0"/>
+                                    <field name="carton_number" invisible="0"/>
+                                </tree>
+                            </field>
+                            <field name="note" placeholder="Add an internal note that will be printed on the GatePass" class="oe_inline" colspan="4"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="xxx.group_gp_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_gp_outward_search">
+        <field name="name">Outward</field>
+        <field name="model">ubw.gp.outward</field>
+        <field name="arch" type="xml">
+            <search string="Outward Search">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="tag_ids"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="manager_id"/>
+                <field name="shipment_id"/>
+                <field name="src_location_id"/>
+                <field name="dest_location_id"/>
+                <field name="state"/>
+                <filter string="My GatePasses" domain="[('user_id','=',uid)]" name="my_gps"/>
+                <separator/>
+                <filter string="Draft" domain="[('state', '=', 'draft')]" name="draft"/>
+                <filter string="Submit" domain="[('state', '=', 'submit')]" name="submit"/>
+                <filter string="Cancelled" domain="[('state', '=', 'cancelled')]" name="cancelled"/>
+                <separator/>
+                <filter string="Approved" domain="[('state', '=', 'approved')]" name="approved"/>
+                <separator/>
+                <filter string="Done" domain="[('state', '=', 'done')]" name="done"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                    <filter string="Partner" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="User" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="Manager" name="manager_id" context="{'group_by':'manager_id'}"/>
+                    <filter string="Source Location" name="src_location_id" context="{'group_by':'src_location_id'}"/>
+                    <filter string="Destination Location" name="dest_location_id" context="{'group_by':'dest_location_id'}"/>
+                    <filter string="Outgoing Shipment" name="shipment_id" context="{'group_by':'shipment_id'}"/>
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_gp_outward_tree">
+      <field name="name">Outward</field>
+      <field name="model">ubw.gp.outward</field>
+      <field name="arch" type="xml">
+        <tree decoration-info="state == 'draft'" decoration-bf="state == 'submit'" decoration-muted="state == 'cancelled'" decoration-primary="state == 'approved'" decoration-success="state == 'done'" string="Outward GatePass List">
+          <field name="name"/>
+          <field name="date"/>
+          <field name="tag_ids"/>
+          <field name="return_date"/>
+          <field name="actual_return_date"/>
+          <field name="consolidate"/>
+          <field name="partner_id"/>
+          <field name="shipment_id"/>
+          <field name="user_id"/>
+          <field name="manager_id"/>
+          <field name="src_location_id"/>
+          <field name="dest_location_id"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Kanban View  -->
+    <record model="ir.ui.view" id="view_ubw_gp_outward_kanban">
+        <field name="name">Outward</field>
+        <field name="model">ubw.gp.outward</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong><span><t t-esc="record.name.value"/></span></strong>
+                                </div>
+                                <div class="col-xs-6 pull-right text-right">
+                                    <field name="state" widget="kanban_label_selection" options="{'classes': {'draft': 'default', 'cancelled': 'default', 'done': 'success', 'approved': 'warning'}}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong><span><t t-esc="record.partner_id.value"/></span></strong>
+                                </div>
+                                <div class="col-xs-6 pull-right text-right">
+                                    <strong><span><t t-esc="record.user_id.value"/></span></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_ubw_gp_outward">
+      <field name="name">Outward</field>
+      <field name="res_model">ubw.gp.outward</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="search_view_id" ref="view_ubw_gp_outward_search"/>
+      <field name='view_id' ref='view_ubw_gp_outward_tree'/>
+      <field name="context">{'search_default_my_gps': True}</field>
+      <field name="help" type="html">
+          <p>
+              No GatePass to display.
+          </p>
+      </field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Outward" id="ubw_menu_gp_outward" parent="ubw_menu_gp" action="action_ubw_gp_outward" sequence="10"/>
+
+    <!-- Purchase Request -->
+    <record model="ir.ui.view" id="view_ubw_pr_master_form">
+      <field name="name">Purchase Request</field>
+      <field name="model">ubw.pr.master</field>
+      <field name="arch" type="xml">
+            <form string="Purchase Request Form">
+                <header>
+                    <button name="action_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
+                    <button name="action_cancel" states="draft,submit" string="Cancel" type="object" class="oe_highlight"/>
+                    <button name="action_print" states="submit,approved" string="Print" type="object" class="oe_highlight"/>
+                    <button name="action_approve" states="submit" string="Approve" type="object" class="oe_highlight" groups="xxx.group_pr_manager"/>
+                    <button name="action_done" states="approved" string="Done" type="object" class="oe_highlight" groups="xxx.group_pr_user"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,cancelled,approved,done"/>
+                </header>
+                <sheet>
+                    <h1 class="hidden-xs">
+                        <field name="name" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group col="6" colspan="6">
+                            <field name="date_request"/>
+                            <field name="date_required"/>
+                            <field name="user_id_1"/>
+                            <field name="partner_id" options='{"no_open": False, "no_create": True}'/>
+                            <field name="user_id_2"/>
+                            <field name="dest_location_id" options='{"no_open": False, "no_create": True}'/>
+                            <field name="date_submit"/>
+                            <field name="date_approve"/>
+                            <field name="date_done"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="purchase_request_line" mode="tree,kanban">
+                                <tree editable="bottom">
+                                    <field name="pr_id" context="{'gp_id':parent.id}" invisible="1"/>
+                                    <field name="product_id" invisible="0" options='{"no_open": False, "no_create": True}'/>
+                                    <field name="product_uom" invisible="0"/>
+                                    <field name="product_qty" invisible="0"/>
+                                </tree>
+                            </field>
+                            <field name="note" placeholder="Add an internal note that will be printed on the Purchase Request" class="oe_inline" colspan="4"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_pr_master_search">
+        <field name="name">Purchase Request</field>
+        <field name="model">ubw.pr.master</field>
+        <field name="arch" type="xml">
+            <search string="Purchase Request Search">
+                <field name="name"/>
+                <field name="date_request"/>
+                <field name="date_required"/>
+                <field name="user_id_1"/>
+                <field name="partner_id"/>
+                <field name="user_id_2"/>
+                <field name="dest_location_id"/>
+                <field name="date_submit"/>
+                <field name="date_approve"/>
+                <field name="date_done"/>
+                <field name="state"/>
+                <filter string="My Purchase Request(s)" domain="[('user_id_1', '=', uid)]" name="my_prs"/>
+                <separator/>
+                <filter string="Draft" domain="[('user_id_1', '=', False)]" name="draft"/>
+                <filter string="Submit" domain="[('user_id_1', '=', False)]" name="submit"/>
+                <filter string="Cancelled" domain="[('user_id_1', '=', False)]" name="cancelled"/>
+                <separator/>
+                <filter string="Approved" domain="[('user_id_1', '=', False)]" name="approved"/>
+                <separator/>
+                <filter string="Done" domain="[('user_id_1', '=', False)]" name="done"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_ubw_pr_master_tree">
+      <field name="name">Purchase Request</field>
+      <field name="model">ubw.pr.master</field>
+      <field name="arch" type="xml">
+        <tree decoration-info="state == 'draft'" decoration-bf="state == 'submit'" decoration-muted="state == 'cancelled'" decoration-primary="state == 'approved'" decoration-success="state == 'done'" string="Outward GatePass List">
+          <field name="name"/>
+          <field name="date_request"/>
+          <field name="date_required"/>
+          <field name="user_id_1"/>
+          <field name="partner_id"/>
+          <field name="user_id_2"/>
+          <field name="dest_location_id"/>
+          <field name="date_submit"/>
+          <field name="date_approve"/>
+          <field name="date_done"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_ubw_pr_master">
+      <field name="name">Purchase Request</field>
+      <field name="res_model">ubw.pr.master</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="view_ubw_pr_master_search"/>
+      <field name='view_id' ref='view_ubw_pr_master_tree'/>
+      <field name="context">{'search_default_my_prs': True}</field>
+      <field name="help" type="html">
+          <p>
+              No GatePass to display.
+          </p>
+      </field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Purchase Request" id="ubw_menu_pr_master" parent="ubw_menu_pr" action="action_ubw_pr_master" sequence="10"/>
+
+  </data>
+</odoo>
